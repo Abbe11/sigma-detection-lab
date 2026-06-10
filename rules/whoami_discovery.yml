@@ -1,0 +1,21 @@
+title: Whoami Execution for Account Discovery
+id: 8a1f2c3d-1111-4aaa-bbbb-000000000001
+status: experimental
+description: Detects execution of whoami.exe, commonly used by attackers for account discovery after gaining access.
+references:
+    - https://attack.mitre.org/techniques/T1033/
+author: Abbe
+date: 2026-06-09
+tags:
+    - attack.discovery
+    - attack.t1033
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\whoami.exe'
+    condition: selection
+falsepositives:
+    - Administrators or scripts legitimately checking the current user context
+level: low
