@@ -1,0 +1,21 @@
+﻿title: Windows Security Event Log Cleared
+id: 8a1f2c3d-4444-4aaa-bbbb-000000000004
+status: experimental
+description: Detects clearing of the Windows Security event log (Event ID 1102). Attackers clear logs to destroy evidence of their activity. The act of clearing is itself logged as 1102, making this a reliable tamper indicator.
+references:
+    - https://attack.mitre.org/techniques/T1070/001/
+author: Abbe
+date: 2026-06-10
+tags:
+    - attack.stealth
+    - attack.t1070
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 1102
+    condition: selection
+falsepositives:
+    - Administrators may clear logs intentionally during maintenance, but this is rare and should always be verified against a change record.
+level: high

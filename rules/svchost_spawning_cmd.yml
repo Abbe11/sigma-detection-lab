@@ -1,0 +1,22 @@
+﻿title: Suspicious cmd.exe Spawned by svchost.exe
+id: 8a1f2c3d-3333-4aaa-bbbb-000000000003
+status: experimental
+description: Detects cmd.exe being launched with svchost.exe as its parent process. svchost.exe runs background system services and has no legitimate reason to spawn a command shell; this parent-child pairing is a common reverse-shell and post-exploitation pattern.
+references:
+    - https://attack.mitre.org/techniques/T1059/003/
+author: Abbe
+date: 2026-06-10
+tags:
+    - attack.execution
+    - attack.t1059.003
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        ParentImage|endswith: \svchost.exe
+        Image|endswith: \cmd.exe
+    condition: selection
+falsepositives:
+    - Rare administrative or service-management scenarios may legitimately spawn cmd.exe under svchost; investigate the command line and the specific service involved.
+level: high
